@@ -1,8 +1,56 @@
 #include <iostream>
 
+#include "window.hpp"
+
 int main()
 {
-    std::cout << "Hello World\n";
 
-    return 0;
+    Window win = Window(800, 600, "Ray Tracer", true);
+
+    win.setResizeCallback([](int width, int height) 
+    {
+        std::cout << "Resized to " << width << "x" << height << "\n";
+    });
+
+    win.setKeyCallback([](GLFWwindow* win, int key, int sc, int act, int mods) 
+    {
+        if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
+            glfwSetWindowShouldClose(win, true);
+    });
+
+    while(!win.shouldClose())
+    {
+        win.clearColor(1.0f, 0.5f, 0.25f, 1.0f);
+
+
+        win.swapBuffer();
+        win.pollEvents();
+    }
+
+    // int image_width = 256;
+    // int image_height = 256;
+
+    // std::cout << "P3\n" << image_width << " " << image_height << "\n255\n";
+
+    // for(int j = 0; j < image_height; j++)
+    // {
+
+    //     std::clog << "\r Scanlines remaining: " << (image_height - j) << " " << std::flush;
+
+    //     for(int i = 0; i < image_width; i++)
+    //     {
+    //         auto r = double(i) / (image_width - 1);
+    //         auto g = double(j) / (image_height - 1);
+    //         auto b = 0.0;
+
+    //         int ir = int(255.999 * r);
+    //         int ig = int(255.999 * g);
+    //         int ib = int(255.999 * b);
+
+    //         std::cout << ir << " " << ig << " " << ib << "\n";
+    //     }
+    // }
+
+    // std::clog << "\r Done \n";
+
 }
