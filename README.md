@@ -22,7 +22,32 @@ This project implements a CPU-based ray tracer with a graphical frontend. The re
 
 ## 🛠️ Installation
 
-*To be added...*
+### 🛠 Prerequisites
+
+Make sure you have the following tools installed:
+
+- **CMake** (>= 3.15)
+- **g++ / clang++ / MSVC** with C++17 support
+- **Git**
+- **OpenGL 3.3+ compatible GPU**
+
+All required dependencies (GLFW, GLAD, stb_image, ImGui) are already included in the `external/` folder. No package managers or submodules are needed.
+
+### 🧱 Build Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ray-tracer.git
+cd ray-tracer
+
+# Create build directory
+mkdir build && cd build
+
+# Generate build files
+cmake ..
+
+# Build the project
+cmake --build .
 
 ---
 
