@@ -23,7 +23,7 @@ if(MSVC)
 add_compile_options(/arch:AVX2)
 endif()
 
-project(RayTracer
+project(ray_tracer
     VERSION 0.1.0
     LANGUAGES C CXX)
 
@@ -52,7 +52,7 @@ if(PRODUCTION_BUILD)
 target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH=./res/)
 target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=1)
 else()
-target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH=${CMAKE_CURRENT_SOURCE_DIR}/res/)
+target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res/")
 target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=0)
 endif()
 
@@ -65,6 +65,7 @@ endif()
 
 target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/window)
+target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/image)
 
 target_link_libraries(ray_tracer PRIVATE
     glfw glad stb_image imgui)

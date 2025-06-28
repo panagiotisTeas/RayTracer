@@ -57,7 +57,7 @@ void GUI::Dockspace()
         ImGuiID left = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.3f, nullptr, &dockspace_id);
         ImGuiID right = dockspace_id;
 
-        ImGui::DockBuilderDockWindow("Controls", left);
+        ImGui::DockBuilderDockWindow("PPM Controls", left);
         ImGui::DockBuilderDockWindow("Viewport", right);
 
         ImGui::DockBuilderFinish(dockspace_id);
