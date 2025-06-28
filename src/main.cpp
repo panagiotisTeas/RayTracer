@@ -1,11 +1,13 @@
 #include <iostream>
 
 #include "window.hpp"
+#include "gui.hpp"
 
 int main()
 {
 
-    Window win = Window(800, 600, "Ray Tracer", true);
+    Window win(800, 600, "Ray Tracer", true);
+    GUI gui(win.getWindow());
 
     win.setResizeCallback([](int width, int height) 
     {
@@ -22,6 +24,22 @@ int main()
     {
         win.clearColor(1.0f, 0.5f, 0.25f, 1.0f);
 
+        gui.begin();
+
+        gui.Dockspace();
+
+        ImGui::Begin("Controls");
+        if(ImGui::Button("Render"))
+        {
+
+        }
+        ImGui::End();
+
+        ImGui::Begin("Viewport");
+        //TODO
+        ImGui::End();
+
+        gui.end();
 
         win.swapBuffer();
         win.pollEvents();
