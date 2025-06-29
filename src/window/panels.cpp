@@ -1,4 +1,5 @@
 #include "panels.hpp"
+#include "color.hpp"
 
 void ImGuiPPMRender(PPMloader& ppmLoader, RenderSettings& settings, ImageViewer& viewer, ImageData& image)
 {
@@ -20,15 +21,8 @@ void ImGuiPPMRender(PPMloader& ppmLoader, RenderSettings& settings, ImageViewer&
         
             for(int i = 0; i < settings.width; i++)
             {
-                auto r = double(i) / (settings.width - 1);
-                auto g = double(j) / (settings.height - 1);
-                auto b = 0.0;
-        
-                int ir = int(255.999 * r);
-                int ig = int(255.999 * g);
-                int ib = int(255.999 * b);
-
-                out << ir << ' ' << ig << ' ' << ib << '\n';
+                auto pixels = color3(float(i)/(settings.width-1), float(j)/(settings.height-1), 0);
+                write_color(out, pixels);
             }
         }
 
