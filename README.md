@@ -37,7 +37,7 @@ All required dependencies (GLFW, GLAD, stb_image, ImGui) are already included in
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ray-tracer.git
+git clone https://github.com/panagiotisteas/ray-tracer.git
 cd ray-tracer
 
 # Create build directory
