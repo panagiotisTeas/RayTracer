@@ -63,7 +63,7 @@ if(MSVC) # If using the VS compiler...
 	set_target_properties(ray_tracer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
 endif()
 
-target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/includes/)
 
 target_link_libraries(ray_tracer PRIVATE
     glfw glad stb_image imgui)
