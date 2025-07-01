@@ -1,8 +1,11 @@
 #include "window/window.hpp"
+#include "window/gui.hpp"
+#include "window/gui_panels.hpp"
 
 int main()
 {
     Window window(800, 600, "Ray Tracer", true);
+    GUI gui(window.getWindow());
 
     //* Window Callbacks
 
@@ -19,7 +22,19 @@ int main()
     {
         window.clearColor(1.0f, 0.5f, 0.25f, 1.0f);
 
-        //* Render
+        gui.begin();
+        gui.dockspace();
+
+        //* Start render
+
+        LeftPanel();
+        RightPanel();
+        BottomPanel();
+        Viewport();
+
+        //* End render
+
+        gui.end();
 
         window.swapBuffer();
         window.pollEvents();
