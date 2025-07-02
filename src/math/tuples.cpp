@@ -136,9 +136,9 @@ float dot(const Tuple& tup1, const Tuple& tup2)
     return tup1.getX() * tup2.getX() + tup1.getY() * tup2.getY() + tup1.getZ() * tup2.getZ() + tup1.getW() * tup2.getW();
 }
 
-Tuple cross(const Tuple& tup1, const Tuple& tup2)
+vec3 cross(const vec3& vec1, const vec3& vec2)
 {
-    return createVector(tup1.getY() * tup2.getZ() - tup1.getZ() * tup2.getY(),
-                        tup1.getZ() * tup2.getX() - tup1.getX() * tup2.getZ(),
-                        tup1.getX() * tup2.getY() - tup1.getY() * tup2.getX());
+    return createVector(vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY(),
+                        vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ(),
+                        vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX());
 }

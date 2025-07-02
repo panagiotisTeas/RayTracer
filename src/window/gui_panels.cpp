@@ -18,17 +18,15 @@ void LeftPanel(PPMData& in, PPMRenderSettings& settings)
         
         for(int j = 0; j < settings.image_height; j++)
         {
-            std::clog << "\r Scanlines remaining: " << (settings.image_height - j) << " " << std::flush;
+            std::clog << "\r Scanlines(%): " << j * 100 / settings.image_height << " " << std::flush;
         
             for(int i = 0; i < settings.image_width; i++)
             {
-                auto r = double(i) / (settings.image_width - 1);
-                auto g = double(j) / (settings.image_height - 1);
-                auto b = 0.0;
+                color col = createColor(1.0f, 0.0f, 0.0f);
 
-                int ir = int(255.999 * r);
-                int ig = int(255.999 * g);
-                int ib = int(255.999 * b);
+                int ir = int(255.999 * col.getX());
+                int ig = int(255.999 * col.getY());
+                int ib = int(255.999 * col.getZ());
 
                 out << ir << ' ' << ig << ' ' << ib << '\n';
             }

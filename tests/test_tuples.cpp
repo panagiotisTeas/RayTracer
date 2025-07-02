@@ -9,10 +9,10 @@ TEST_CASE("tuple implementation test", "[Tuples]")
     Tuple vector(1.0f, 2.0f, 3.0f, 0.0f);
     Tuple random(1.0f, 2.0f, 3.0f, 0.5f);
 
-    REQUIRE(point.getX() == 1.0f);
-    REQUIRE(point.getY() == 2.0f);
-    REQUIRE(point.getZ() == 3.0f);
-    REQUIRE(point.getW() == 1.0f);
+    REQUIRE(equal(point.getX(), 1.0f));
+    REQUIRE(equal(point.getY(), 2.0f));
+    REQUIRE(equal(point.getZ(), 3.0f));
+    REQUIRE(equal(point.getW(), 1.0f));
 
     REQUIRE(point.isPoint() == true);
     REQUIRE(point.isVector() == false);
@@ -42,41 +42,41 @@ TEST_CASE("tuple operations test", "[Tuples]")
 
     Tuple tup3 = tup1 + tup2;
 
-    REQUIRE(tup3.getX() == -3.0f);
-    REQUIRE(tup3.getY() == 3.0f);
-    REQUIRE(tup3.getZ() == -3.0f);
-    REQUIRE(tup3.getW() == 1.0f);
+    REQUIRE(equal(tup3.getX(), -3.0f));
+    REQUIRE(equal(tup3.getY(), 3.0f));
+    REQUIRE(equal(tup3.getZ(), -3.0f));
+    REQUIRE(equal(tup3.getW(), 1.0f));
 
     tup3 += tup1;
 
-    REQUIRE(tup3.getX() == -2.0f);
-    REQUIRE(tup3.getY() == 1.0f);
-    REQUIRE(tup3.getZ() == 0.0f);
-    REQUIRE(tup3.getW() == 2.0f);
+    REQUIRE(equal(tup3.getX(), -2.0f));
+    REQUIRE(equal(tup3.getY(), 1.0f));
+    REQUIRE(equal(tup3.getZ(), 0.0f));
+    REQUIRE(equal(tup3.getW(), 2.0f));
 
     //* Subtraction
 
     Tuple tup4 = tup1 - tup2;
 
-    REQUIRE(tup4.getX() == 5.0f);
-    REQUIRE(tup4.getY() == -7.0f);
-    REQUIRE(tup4.getZ() == 9.0f);
-    REQUIRE(tup4.getW() == 1.0f);
+    REQUIRE(equal(tup4.getX(), 5.0f));
+    REQUIRE(equal(tup4.getY(), -7.0f));
+    REQUIRE(equal(tup4.getZ(), 9.0f));
+    REQUIRE(equal(tup4.getW(), 1.0f));
 
     tup4 -= tup1;
 
-    REQUIRE(tup4.getX() == 4.0f);
-    REQUIRE(tup4.getY() == -5.0f);
-    REQUIRE(tup4.getZ() == 6.0f);
-    REQUIRE(tup4.getW() == 0.0f);
+    REQUIRE(equal(tup4.getX(), 4.0f));
+    REQUIRE(equal(tup4.getY(), -5.0f));
+    REQUIRE(equal(tup4.getZ(), 6.0f));
+    REQUIRE(equal(tup4.getW(), 0.0f));
 
     //* Negation
 
     Tuple tup5 = -tup1;
-    REQUIRE(tup5.getX() == -1.0f);
-    REQUIRE(tup5.getY() == 2.0f);
-    REQUIRE(tup5.getZ() == -3.0f);
-    REQUIRE(tup5.getW() == -1.0f);
+    REQUIRE(equal(tup5.getX(), -1.0f));
+    REQUIRE(equal(tup5.getY(), 2.0f));
+    REQUIRE(equal(tup5.getZ(), -3.0f));
+    REQUIRE(equal(tup5.getW(), -1.0f));
 
     //* Multiplication/Division by Scalar
 
@@ -138,18 +138,18 @@ TEST_CASE("tuple operations test", "[Tuples]")
     vec3 vector7 = createVector(1.0f, 2.0f, 3.0f);
     vec3 vector8 = createVector(2.0f, 3.0f, 4.0f);
 
-    REQUIRE(dot(vector7, vector8) == 20.0f);
+    REQUIRE(equal(dot(vector7, vector8), 20.0f));
 
     //* Cross product
 
     vec3 vector9 = cross(vector7, vector8);
     vec3 vector10 = cross(vector8, vector7);
 
-    REQUIRE(vector9.getX() == -1.0f);
-    REQUIRE(vector9.getY() == 2.0f);
-    REQUIRE(vector9.getZ() == -1.0f);
+    REQUIRE(equal(vector9.getX(), -1.0f));
+    REQUIRE(equal(vector9.getY(), 2.0f));
+    REQUIRE(equal(vector9.getZ(), -1.0f));
 
-    REQUIRE(vector10.getX() == 1.0f);
-    REQUIRE(vector10.getY() == -2.0f);
-    REQUIRE(vector10.getZ() == 1.0f);
+    REQUIRE(equal(vector10.getX(), 1.0f));
+    REQUIRE(equal(vector10.getY(), -2.0f));
+    REQUIRE(equal(vector10.getZ(), 1.0f));
 }

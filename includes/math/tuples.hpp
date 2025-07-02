@@ -16,7 +16,7 @@ public:
     Tuple(float ux, float uy, float uz, float uw);
 
     //* Getters
-    
+
     float getX() const;
     float getY() const;
     float getZ() const;
@@ -72,4 +72,4 @@ float length(const Tuple& tup);
 Tuple normalize(const Tuple& tup);
 float dot(const Tuple& tup1, const Tuple& tup2);
 //! Only on vectors
-Tuple cross(const Tuple& tup1, const Tuple& tup2); 
+vec3 cross(const vec3& tup1, const vec3& tup2); 

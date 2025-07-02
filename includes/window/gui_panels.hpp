@@ -7,6 +7,8 @@
 #include "ppm/ppm_renderer.hpp"
 #include "ppm/ppm_render_settings.hpp"
 
+#include "math/colors.hpp"
+
 void LeftPanel(PPMData& in, PPMRenderSettings& settings);
 void RightPanel();
 void BottomPanel();
