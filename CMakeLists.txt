@@ -27,6 +27,18 @@ project(ray_tracer
     VERSION 0.1.0
     LANGUAGES C CXX)
 
+# --- Testing ---
+include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG v3.5.2
+)
+
+FetchContent_MakeAvailable(Catch2)
+# --- Testing ---
+
 # GLFW CMake cache options
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -40,8 +52,27 @@ add_subdirectory(external/glad)
 add_subdirectory(external/imgui-docking)
 add_subdirectory(external/stb_image)
 
-# list of all source files
-file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+# ============================
+# === Core Library (No GL) ===
+# ============================
+
+# Add only testable, non-GL source files (math, utils, etc.)
+file(GLOB_RECURSE CORE_SRCS
+    CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/math/*.cpp
+    # Add more logic paths here
+)
+
+add_library(ray_tracer_lib STATIC ${CORE_SRCS})
+target_include_directories(ray_tracer_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/includes)
+
+# =======================
+# === Main Application ===
+# =======================
+
+file(GLOB_RECURSE WIN_SRCS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/window/*.cpp)
+file(GLOB_RECURSE PPM_SRCS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/ppm/*.cpp)
+set(MAIN_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_executable(ray_tracer)
 set_property(TARGET ray_tracer PROPERTY CXX_STANDARD 17)
@@ -49,21 +80,35 @@ set_property(TARGET ray_tracer PROPERTY CXX_STANDARD 17)
 target_compile_definitions(ray_tracer PUBLIC GLFW_INCLUDE_NONE=1)
 
 if(PRODUCTION_BUILD)
-target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH=./res/)
-target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=1)
+    target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH=./res/)
+    target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=1)
 else()
-target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res/")
-target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=0)
+    target_compile_definitions(ray_tracer PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res/")
+    target_compile_definitions(ray_tracer PUBLIC PRODUCTION_BUILD=0)
 endif()
 
-target_sources(ray_tracer PRIVATE ${SRCS})
-
-if(MSVC) # If using the VS compiler...
-	target_compile_definitions(ray_tracer PUBLIC _CRT_SECURE_NO_WARNINGS)
-	set_target_properties(ray_tracer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
-endif()
-
-target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/includes/)
+target_sources(ray_tracer PRIVATE ${MAIN_SRC} ${WIN_SRCS} ${PPM_SRCS})
+target_include_directories(ray_tracer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/includes)
 
 target_link_libraries(ray_tracer PRIVATE
+    ray_tracer_lib
     glfw glad stb_image imgui)
+
+if(MSVC)
+    target_compile_definitions(ray_tracer PUBLIC _CRT_SECURE_NO_WARNINGS)
+    set_target_properties(ray_tracer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+endif()
+
+# =============
+# === Tests ===
+# =============
+
+file(GLOB_RECURSE TEST_SRCS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
+
+add_executable(tests ${TEST_SRCS})
+target_link_libraries(tests PRIVATE ray_tracer_lib Catch2::Catch2WithMain)
+target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/includes)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(tests)
